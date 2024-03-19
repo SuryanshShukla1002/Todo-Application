@@ -1,11 +1,16 @@
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 
 const AddToDo = () => {
     const [TODO, setTODO] = useState("")
 
-    const handleFormSubmit = () => {
-        
+    const handleFormSubmit = (e:FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleAddTodDo(TODO)
+        setTODO("")
     }
+
+    
+
   return (
     <form onSubmit={handleFormSubmit} >
         <input type="text" value={TODO} onChange={(e) => setTODO(e.target.value)} />
