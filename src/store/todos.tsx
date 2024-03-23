@@ -14,13 +14,14 @@ export type Todo = {
 
 export type TodosContext = {
     todos:[];
+    handleAddTodDo:(task:string) => void
 }
 
-export const todoContext = createContext(null)
+export const todoContext = createContext<TodosContext>(null)
 
 
 export const TodosProvider = ({children}: TodosProviderProps) => {
-    return <todoContext.Provider value={{}}>
+    return <todoContext.Provider value={{todo, handleAddTodDo}}>
         {children}
     </todoContext.Provider>
 }
