@@ -1,4 +1,4 @@
-import { ReactNode, createContext } from "react";
+import { ReactNode, createContext, useState } from "react";
 
 export type TodosProviderProps = {
   children: ReactNode;
@@ -12,15 +12,31 @@ export type Todo = {
 };
 
 export type TodosContext = {
-  todos: [];
+  todos:Todo[];
   handleAddTodDo: (task: string) => void;
 };
 
-export const todoContext = createContext<TodosContext>(null);
+export const todoContext = createContext<TodosContext | null>(null);
 
 export const TodosProvider = ({ children }: TodosProviderProps) => {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const handleAddTodDo = (task:string) => {
+    setTodos((prev) => {
+      const newTodos: Todo[] = [
+        {
+          id: Math.random().toString(),
+          task: task,
+          completed: false,
+          createdAt: new Date(),
+        },
+        ...prev,
+      ];
+      return newTodos;
+    });
+  };
   return (
-    <todoContext.Provider value={{ todo, handleAddTodDo }}>
+    <todoContext.Provider value={{todos, handleAddTodDo }}>
       {children}
     </todoContext.Provider>
   );
