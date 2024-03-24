@@ -5,6 +5,7 @@ const App = () => {
     <main>
       <h1>TODO APPLICATION</h1>
       <AddToDo />
+      <Todos />
     </main>
   );
 };
