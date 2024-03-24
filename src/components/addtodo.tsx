@@ -1,21 +1,23 @@
 import { FormEvent, useState } from "react"
+import { useTodos } from "../store/todos"
 
-const AddToDo = () => {
-    const [TODO, setTODO] = useState("")
+const Addtodo = () => {
+    const [todo, setTodo] = useState("")
+    const {handleAddTodDo} = useTodos();
 
     const handleFormSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleAddTodDo(TODO)
-        setTODO("")
+        handleAddTodDo(todo)
+        setTodo("")
     }
 
     
 
   return (
     <form onSubmit={handleFormSubmit} >
-        <input type="text" value={TODO} onChange={(e) => setTODO(e.target.value)} />
+        <input type="text" value={todo} onChange={(e) => setTodo(e.target.value)} />
         <button type="submit">ADD</button>
     </form>
   )
 }
-export default AddToDo
+export default Addtodo
