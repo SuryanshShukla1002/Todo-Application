@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 export type TodosProviderProps = {
   children: ReactNode;
@@ -12,7 +12,7 @@ export type Todo = {
 };
 
 export type TodosContext = {
-  todos:Todo[];
+  todos: Todo[];
   handleAddTodDo: (task: string) => void;
 };
 
@@ -21,7 +21,7 @@ export const todoContext = createContext<TodosContext | null>(null);
 export const TodosProvider = ({ children }: TodosProviderProps) => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const handleAddTodDo = (task:string) => {
+  const handleAddTodDo = (task: string) => {
     setTodos((prev) => {
       const newTodos: Todo[] = [
         {
@@ -36,8 +36,17 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
     });
   };
   return (
-    <todoContext.Provider value={{todos, handleAddTodDo }}>
+    <todoContext.Provider value={{ todos, handleAddTodDo }}>
       {children}
     </todoContext.Provider>
   );
+};
+
+// consumer
+export const useTodos = () => {
+  const todosConsumer = useContext(todoContext);
+  if (!todoContext) {
+    throw new Error("useTodo used outside the provider");
+  }
+  return todosConsumer;
 };
